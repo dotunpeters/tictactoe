@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+   <div>
+
+   </div>
+
+   <div class="jumbotron">
+       <table>
+           {% for i in range(6) %}
+           <tr>
+               {% for j in range(6) %}
+
+               {% if board[i][j] %}
+               <td>
+                   {% if board[i][j] == "X" %}
+                   <p class="blue">{{ board[i][j] }}</p>
+                   {% endif %}
+                   {% if board[i][j] == "O" %}
+                   <p class="red">{{ board[i][j] }}</p>
+                   {% endif %}
+               </td>
+               {% else %}
+               {% if winner %}
+               <td class="play">
+                   <p> &nbsp; </p>
+               </td>
+               {% else %}
+               <td class="play">
+                   <a href="{{ url_for('play', col=i, row=j) }}">
+                       <p> &nbsp; </p>
+                   </a>
+               </td>
+               {% endif %}
+               {% endif %}
+
+               {% endfor %}
+           </tr>
+           {% endfor %}
+       </table>
+       <div>
+           <a href="{{ url_for('undo') }}">
+               <span>
+                   UNDO
+               </span>
+           </a>
+           <a href="{{ url_for('refresh') }}">
+               <span>
+                   REFRESH
+               </span>
+           </a>
+       </div>
+       {% if winner %}
+       <div class="win">
+           {% if winner == "X" %}
+                <p class="win blue">You Won!</p>
+           {% elif draw == True %}
+                <p class="win red">Draw!</p>
+           {% else %}
+                <p class="win red">You Loose!</p>
+           {% endif %}
+       </div>
+       {% endif %}
+   </div>
+
+{% endblock %}
